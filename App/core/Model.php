@@ -1,21 +1,11 @@
-# Classe mère des modèles (CRUD basique)
 <?php
-
 namespace App\Core;
-
 use PDO;
+
 abstract class Model
 {
-    
     protected PDO $db;
 
-    /**
-     * Le constructeur est appelé automatiquement à chaque fois qu'on
-     * fait `new UserModel()`, `new FamilyGroupModel()`, etc.
-     * Il va chercher la connexion PDO unique auprès du Singleton
-     * Database, et la range dans $this->db pour que les méthodes
-     * filles (findByEmail, create, etc.) puissent l'utiliser.
-     */
     public function __construct()
     {
         $this->db = Database::getInstance();

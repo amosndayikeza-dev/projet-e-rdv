@@ -1,12 +1,9 @@
-// Analyse des URLs (ex: /auth/register)
 <?php
 
 namespace App\Core;
 
-
 class Router
 {
-
     private array $routes = [
         'GET'  => [],
         'POST' => [],
@@ -14,19 +11,11 @@ class Router
         'DELETE' => [],
     ];
 
-    /**
-     * Enregistre une route GET.
-     *
-     * @param string $uri              ex: '/connexion', '/api/family/members'
-     * @param string $action           ex: 'App\Controllers\Web\AuthController@showLogin'
-     * @param array  $middlewares      ex: ['AuthMiddleware', 'ChefMiddleware']
-     */
     public function get(string $uri, string $action, array $middlewares = []): void
     {
         $this->addRoute('GET', $uri, $action, $middlewares);
     }
 
-    /** Enregistre une route POST (formulaires, création de données...). */
     public function post(string $uri, string $action, array $middlewares = []): void
     {
         $this->addRoute('POST', $uri, $action, $middlewares);
@@ -42,18 +31,13 @@ class Router
         $this->addRoute('DELETE', $uri, $action, $middlewares);
     }
 
-    /**
-     * Méthode interne commune à get()/post()/put()/delete().
-     * On normalise l'URI (retire les "/" en trop) pour que '/connexion'
-     * et '/connexion/' soient traités comme identiques.
-     */
     private function addRoute(string $method, string $uri, string $action, array $middlewares): void
     {
         $uri = $this->normalize($uri);
 
         $this->routes[$method][$uri] = [
-            'action'      => $action,       // ex: "App\Controllers\Web\AuthController@showLogin"
-            'middlewares' => $middlewares,   // ex: ["AuthMiddleware"]
+            'action'      => $action,
+            'middlewares' => $middlewares,
         ];
     }
 
@@ -63,13 +47,6 @@ class Router
         return $trimmed === '' ? '/' : '/' . $trimmed;
     }
 
-    /**
-     * Le cœur du Router : appelé UNE SEULE FOIS par public/index.php
-     * pour chaque requête HTTP entrante.
-     *
-     * @param string $requestMethod ex: $_SERVER['REQUEST_METHOD']  -> "GET"
-     * @param string $requestUri    ex: $_SERVER['REQUEST_URI']     -> "/api/cards/verify?x=1"
-     */
     public function dispatch(string $requestMethod, string $requestUri): void
     {
         $method = strtoupper($requestMethod);
@@ -102,7 +79,6 @@ class Router
             return;
         }
 
-      
         $controller->$methodName();
     }
 
@@ -122,8 +98,6 @@ class Router
             exit;
         }
 
-        // Chaque middleware décide lui-même de laisser passer ou de
-        // bloquer (redirect, http_response_code(401)+exit, etc.).
         $middleware->handle();
     }
 
