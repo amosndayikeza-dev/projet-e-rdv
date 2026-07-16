@@ -1,0 +1,1 @@
+# Gestion des patients (login, hash, etc.)

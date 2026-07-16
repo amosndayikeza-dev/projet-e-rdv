@@ -1,0 +1,1 @@
+# Routes pour les APIs (ex: /api/v1/cards/verify)

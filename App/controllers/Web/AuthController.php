@@ -1,0 +1,1 @@
+  └── AuthController.php           # Gère l'affichage des formulaires, redirections
