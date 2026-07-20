@@ -1,22 +1,26 @@
 <?php
-class DataBase{
-    private string $nomUtilisateur = "root";
-    private string $password = "";
-    private string $hote = "localhost";
-    private string $nomBD = "projet-e-rdv";
-    private PDO $pdo;
-    public function __construct()
-    {
-        try{
-            $this-> pdo = new PDO("mysql:hostname={$this->hote};dbname={$this->nomBD",$this->nomUtilisateur,$this->password);
-            echo"connection reussie";
-        }catch(PDOExeption $e){
-            echo"connection echoue"
-        }
-    }
-    public function getconnection(){
-        return $this->pdo;
-    }
-}
-$database = new database();
-?>
+
+/**
+ * Fichier de configuration de la base de données
+ * 
+ * Ce fichier retourne un tableau associatif contenant les paramètres
+ * de connexion à MySQL. Il est chargé par la classe Database (Singleton)
+ * lors du premier appel.
+ * 
+ * @package Config
+ * @version 1.0
+ */
+
+return [
+    /** @var string Hôte du serveur MySQL (généralement localhost en développement) */
+    'host' => 'localhost',
+    
+    /** @var string Nom de la base de données créée via le script SQL */
+    'dbname' => 'e_rdv_burundi',
+    
+    /** @var string Utilisateur MySQL (par défaut 'root' sous XAMPP) */
+    'user' => 'root',
+    
+    /** @var string Mot de passe MySQL (laisser vide sous XAMPP) */
+    'password' => ''
+];
